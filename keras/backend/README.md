@@ -60,3 +60,54 @@ def sum(x, axis = None, keepdims = False):
 	return np.sum(x, axis = axis, keepdims = keepdims)
 ```
 
+
+
+### flatten
+
+```python
+keras.backend.flatten()
+```
+
+Tensor를 합쳐서 나열함
+
+#### Arugments
+
+- **x** : A tensor or variable
+
+#### Return
+
+1-D 으로 reshape된 tensor. 다 펴버린다.
+
+#### Example
+
+```python
+import numpy as np
+from keras.layers import Input, Flatten
+from keras.models import Model
+inputs = Input(shape=(3,2,4))
+
+# Define a model consisting only of the Flatten operation
+prediction = Flatten()(inputs)
+model = Model(inputs=inputs, outputs=prediction)
+
+x = np.arange(0,24).reshape(1,3,2,4)
+print(np.shape(x)) #(1, 3, 2, 4)
+print(x)
+
+#[[[[ 0  1  2  3]
+#   [ 4  5  6  7]]
+#
+#  [[ 8  9 10 11]
+#   [12 13 14 15]]
+#
+#  [[16 17 18 19]
+#   [20 21 22 23]]]]
+
+print(np.shape(model.predict(x))) # (1,24)
+print(model.predict(x))
+#array([[  0.,   1.,   2.,   3.,   4.,   5.,   6.,   7.,   8.,   9.,  10.,
+#         11.,  12.,  13.,  14.,  15.,  16.,  17.,  18.,  19.,  20.,  21.,
+#         22.,  23.]], dtype=float32)
+
+```
+
